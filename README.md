@@ -1,2 +1,2 @@
 # proppy
-RC propeller and motor selection tool
+PropPy is an interface and series of scripts to calculate the performance and optimise the selection of RC propeller and motor combinations. It is written in python and uses a pyQT interface. Propeller performance is calculated using experimental data from the University of Illinois propeller database and the theoretical results supplied on the APC website. Motor performance is calculated using motor constants.
