@@ -1,0 +1,20 @@
+// File defining motor constants and values to be read into dictionary
+name : Quanum MT Series 5208 360KV
+folder : 
+I0 : 0.7
+R : 0.45
+Rthma : 0.0
+Rthwm : 0.0
+mass : 192.0
+k1 : 0.0
+Rthsa : 0.0
+alpham : -0.0012
+alphar : 0.004
+use_thermal : False
+Rthws : 0.0
+Imax : 30.0
+Tref : 25.0
+has_data : False
+k2 : 0.0
+Kv : 360.0
+k3 : 0.7

@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>866</width>
+    <height>735</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>PropPy</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="spacing">
+     <number>7</number>
+    </property>
+    <item row="7" column="3" rowspan="6" colspan="4">
+     <widget class="QWidget" name="widget_plot" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>500</width>
+        <height>500</height>
+       </size>
+      </property>
+      <layout class="QVBoxLayout" name="layout_plot"/>
+     </widget>
+    </item>
+    <item row="3" column="6">
+     <widget class="QPushButton" name="pushButton_plane_create">
+      <property name="toolTip">
+       <string>Create a new plane</string>
+      </property>
+      <property name="text">
+       <string>Create new</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="5" colspan="2">
+     <widget class="QListView" name="listView_planes">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>180</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLabel" name="label">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>14</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Motor</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="5">
+     <widget class="QPushButton" name="pushButton_plane_edit">
+      <property name="toolTip">
+       <string>Edit currently selected plane</string>
+      </property>
+      <property name="text">
+       <string>Edit</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QLabel" name="label_3">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>14</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Propeller</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QPushButton" name="pushButton_motor_edit">
+      <property name="toolTip">
+       <string>Edit currently selected motor</string>
+      </property>
+      <property name="text">
+       <string>Edit</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="5">
+     <widget class="QLabel" name="label_2">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>14</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Plane</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="4">
+     <widget class="QPushButton" name="pushButton_prop_filter">
+      <property name="toolTip">
+       <string>Filter list of propellers</string>
+      </property>
+      <property name="text">
+       <string>Filter</string>
+      </property>
+     </widget>
+    </item>
+    <item row="16" column="5">
+     <widget class="QPushButton" name="pushButton_plot">
+      <property name="toolTip">
+       <string>Plot the current selection on the graph</string>
+      </property>
+      <property name="text">
+       <string>Plot</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QPushButton" name="pushButton_motor_create">
+      <property name="toolTip">
+       <string>Create a new motor</string>
+      </property>
+      <property name="text">
+       <string>Create new</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="3" colspan="2">
+     <widget class="QListView" name="listView_props">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>180</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1" colspan="2">
+     <widget class="QListView" name="listView_motors">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>180</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QLineEdit" name="lineEdit_prop_filter"/>
+    </item>
+    <item row="16" column="6">
+     <widget class="QPushButton" name="pushButton_clear_plot">
+      <property name="toolTip">
+       <string>Clear current plot</string>
+      </property>
+      <property name="text">
+       <string>Clear plot</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1" colspan="2">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string>Plot type</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QRadioButton" name="radioButton_V_Pel">
+         <property name="text">
+          <string>Power vs steady air speed</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioButton_V_eta">
+         <property name="text">
+          <string>System efficiency  vs steady air speed</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioButton_V_eta_prop">
+         <property name="text">
+          <string>Propeller efficiency vs steady air speed</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioButton_V_eta_mot">
+         <property name="text">
+          <string>Motor efficiency vs steady air speed</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="7" column="1" colspan="2">
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="title">
+       <string>Additional calculations</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QPushButton" name="pushButton_optimise">
+         <property name="toolTip">
+          <string>Compare the selected motors and propellers for the selected plane to find the optimal choice.</string>
+         </property>
+         <property name="text">
+          <string>Optimise for selected plane</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_quad_optimise">
+         <property name="toolTip">
+          <string>Optimise selected motors and propellers for a hovering application</string>
+         </property>
+         <property name="text">
+          <string>Optimise for hovering craft</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_prop_dets">
+         <property name="text">
+          <string>Propeller details and Kv chooser</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_get_risks">
+         <property name="toolTip">
+          <string>Give the details on the current selection, max current, thrust etc.</string>
+         </property>
+         <property name="text">
+          <string>Details of selected system</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>866</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="actionBattery_settings"/>
+    <addaction name="actionAtmosphere_settings"/>
+    <addaction name="actionOptimisation_settings"/>
+   </widget>
+   <widget class="QMenu" name="menuInformation">
+    <property name="title">
+     <string>Information</string>
+    </property>
+    <addaction name="actionVersion_info"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuSettings"/>
+   <addaction name="menuInformation"/>
+  </widget>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="statusTip">
+    <string>Exit application</string>
+   </property>
+  </action>
+  <action name="actionController_settings">
+   <property name="text">
+    <string>Controller settings</string>
+   </property>
+   <property name="statusTip">
+    <string>Change test controller settings.</string>
+   </property>
+  </action>
+  <action name="actionBattery_settings">
+   <property name="text">
+    <string>Battery settings</string>
+   </property>
+   <property name="statusTip">
+    <string>Change battery settings</string>
+   </property>
+  </action>
+  <action name="actionAtmosphere_settings">
+   <property name="text">
+    <string>Atmosphere settings</string>
+   </property>
+   <property name="statusTip">
+    <string>Change atmosphere settings</string>
+   </property>
+  </action>
+  <action name="actionVersion_info">
+   <property name="text">
+    <string>Version info</string>
+   </property>
+  </action>
+  <action name="actionOptimisation_settings">
+   <property name="text">
+    <string>Optimisation settings</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

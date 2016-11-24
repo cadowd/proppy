@@ -1,0 +1,8 @@
+// File defining plane constants and values to be read into dictionary
+C_3 : 0.0252
+loss_ref_length : 0.0
+ref_area : 0.5065
+loss_factor : 1.0
+C_2 : 0.0007
+C_1 : 0.0688
+mass : 1.23
