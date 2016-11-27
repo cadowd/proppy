@@ -1,0 +1,18 @@
+// File defining motor constants and values to be read into dictionary
+I0 : 0.5
+Rthsa : 0.0
+Rthws : 0.0
+Rthma : 0.0
+alpham : -0.0012
+k2 : 0.0
+alphar : 0.004
+name : AXI 2203 40VPP GOLD LINE
+Kv : 2000.0
+Rthwm : 0.0
+k1 : 0.0
+mass : 17.5
+R : 0.245
+k3 : 0.5
+Imax : 9.0
+Tref : 25.0
+use_thermal : False
