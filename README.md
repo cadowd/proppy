@@ -13,6 +13,13 @@ To find an optimal combination, select a number of propellers and motors and onl
 
 The hovering craft and Kv chooser windows are not yet fully functional.
 
+# The main window
+The main window shows the lists of motors, propellers and planes that you might want to compare, as well as flight speed vs consumption plots. For this introduction, we'll look at comparing several choices of propeller for a single motor choice, however you can also compare motors or aircraft themselves (for this you will need the xflr5 models however). The image below shows the power consumption for a selection of APC props for a turnigy motor.
+
+![optimisation_plot](/img/example1.png)
+
+What you will quickly notice as you start to do more comparisions, is that the difference in optimal propeller choices generally makes minimal impact around the optimal flight speeds of the craft. Where the difference is bigger however, is in maximum speed and in general performance. The combination performance is better visualised in the optimisation window, however from these plots we can see for example that the smaller, high pitch propeller is the best choice for high speed flight (highest max speed, low power consumption near the drag bucket), however for low speed manouvres the larger, 9x4.7 prop may be a better choice. The most informative plots of propeller/motor performance however are in the optimisation window, which will also give estimates for range and flight times.
+
 ## The optimisation window:
 Firstly, you will want to check the conditions of optimisation. Are you looking for the motor/prop combination that gives you the longest range or the longest flight time? Do you need a fixed flight speed or should the program select the optimal speed? Do you have any particular constraints on the combinations (the most important constraint is the percentage by which the motor can be overloaded, this should be kept close to 100% to avoid the risk of the motor burning out). Once this has been selected, click the 'find optimal combinations' button.
 
@@ -29,6 +36,7 @@ It should be noted that the reported values of the max flight time and max range
 ### Efficiency plots
 This plot shows a coloured contour map of the thrust and speed range for the selected motor/prop combination. This can be very useful for estimating the performance of the combination. For example, the plot below shows the results for a 9x6 prop.
 ![efficiency_plot](/img/efficiency.png)
+
 Here we can see that the combination is most efficient at relatively high speeds due to it's medium pitch. Note that no combination will show high efficiencies at low speeds as the definition of propulsive efficiency depends on a velocity component (see the  [UI prop database definitions](http://m-selig.ae.illinois.edu/props/propDB.html)). This combination seems to be a good choice, as we have a nice region of high efficiency right in the drag bucket of the aircraft (the minimum of the plane's drag polar, and where the most efficient flight happens). Changes of speed in this region don't result in rapid losses of efficiency. We can also see how much acceleration the craft has available. If the plane is flying at 15m/s (with around 2N of drag) and you give it full throttle, with this combination you'll have another 12N of thrust available for acceleration (a bit more than a kilo of force, the actual acceleration depends on the plane's weight but for a 1kg craft this is just over 1m/s/s). At full throttle at 15m/s you'll also be getting about 35% total efficiency out of this system, which isn't too shabby (for sudden acceleration it's rare to hit high efficiencies).
 
 As a comparison, this is the same motor with a 9x4.7 prop.
@@ -38,4 +46,5 @@ At 15m/s, you only have about 8N of available accelerative force, or about two t
 
 ### Performance plots
 ![Performance_plot](/img/power.png)
-This plot shows the combinations power consumption. Here we see that I was actually pretty lazy for this example case and didn't pick a good motor combination, as a lot of this plot is red with black hatches. This indicates regions where the motor is operating over it's power or current limits, and where there is a risk of burn out. If there's only a little bit of black and red on the plot, you're probably safe, but in this case full throttle will almost certainly burn that motor throughout the entire plotted flight envelope. This plot is also useful however to predict max power draws and currents for your battery selection.
+
+This plot shows the combinations power consumption. Here we see that I was actually pretty lazy for this example case and didn't pick a good motor combination, as a lot of this plot is red with black hatches. This indicates regions where the motor is operating over its power or current limits, and where there is a risk of burn out. If there's only a little bit of black and red on the plot, you're probably safe, but in this case full throttle will almost certainly burn that motor throughout the entire plotted flight envelope. This plot is also useful however to predict max power draws and currents for your battery selection.
