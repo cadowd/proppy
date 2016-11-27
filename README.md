@@ -33,3 +33,9 @@ Here we can see that the combination is most efficient at relatively high speeds
 
 As a comparison, this is the same motor with a 9x4.7 prop.
 ![efficiency_plot](/img/efficiency2.png)
+
+At 15m/s, you only have about 8N of available accelerative force, or about two thirds of what you got with the 9x6. This will feel much less responsive in the air, and will take longer to change speed as well as requiring more throttle inputs for manouvres at these speeds. On the other hand though, the 9x4.7 prop is slightly more efficient at lower speeds and gives a slightly higher thrust at take off, so this could be a better choice for a slower flying plane (or even a multicopter, but more on that later).
+
+### Performance plots
+![Performance_plot](/img/power.png)
+This plot shows the combinations power consumption. Here we see that I was actually pretty lazy for this example case and didn't pick a good motor combination, as a lot of this plot is red with black hatches. This indicates regions where the motor is operating over it's power or current limits, and where there is a risk of burn out. If there's only a little bit of black and red on the plot, you're probably safe, but in this case full throttle will almost certainly burn that motor throughout the entire plotted flight envelope. This plot is also useful however to predict max power draws and currents for your battery selection.
