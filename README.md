@@ -8,9 +8,13 @@ If this is your first time with python, I recommend downloading the newest versi
 
 
 It requires the following libraries:
+
 pyqt4
+
 scipy
+
 numpy (ensure it is the most recent version)
+
 pickle
 
 
