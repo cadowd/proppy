@@ -17,6 +17,7 @@ The hovering craft and Kv chooser windows are not yet fully functional.
 Firstly, you will want to check the conditions of optimisation. Are you looking for the motor/prop combination that gives you the longest range or the longest flight time? Do you need a fixed flight speed or should the program select the optimal speed? Do you have any particular constraints on the combinations (the most important constraint is the percentage by which the motor can be overloaded, this should be kept close to 100% to avoid the risk of the motor burning out). Once this has been selected, click the 'find optimal combinations' button.
 
 The first time a combination is calculated may take some time, but the results are saved to make future calculations speedier (the so called 'power surfaces' to be explained in the theory section). The graph that appears after calculation should resemble the one shown below.
-![alt tag]( proppy/img/example3.png )
+
+![optimisation_plot](/img/example3.png)
 
 This gives an overview of the regions where each combination is the most efficient. Not all the combinations shown in this plot may meet the constraints however, the successful combinations are shown in the bottom window.
