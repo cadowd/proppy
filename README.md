@@ -4,7 +4,12 @@ PropPy is an interface and series of scripts to calculate the performance and op
 ## Installation:
 To install, simply download the codes and run main.py. You will need python3, I use the Anaconda distribution. The code has been developed on windows but should run on linux as well.
 
-If this is your first time with python, I recommend downloading the newest version of Anaconda with python 3.5 from here [here](https://www.continuum.io/downloads). Otherwise you will have to install all of the required libraries by hand, which may be annoying.
+If this is your first time with python, I recommend downloading the newest version of Anaconda with python 3.5 from here [here](https://www.continuum.io/downloads). Unfortantely the newest version doesn't include pyqt4, so you will have to install that by hand. To do this, open the conda console in administrator mode and type:
+```
+conda install -c anaconda pyqt=4.11.4
+```
+
+If you don't use Anaconda you will have to install all of the required libraries by hand, which may be annoying.
 
 
 It requires the following libraries:
