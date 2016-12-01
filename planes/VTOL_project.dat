@@ -1,6 +1,6 @@
 // File defining plane constants and values to be read into dictionary
-mass : 4.6
-C_3 : 0.0106
-C_1 : 0.054
-C_2 : -0.0059
+C_3 : 0.0105
+mass : 3.5
+C_2 : -0.0052
+C_1 : 0.056
 ref_area : 0.745

@@ -1,0 +1,18 @@
+// File defining motor constants and values to be read into dictionary
+alphar : 0.004
+k2 : 0.0
+Rthsa : 0.0
+R : 0.106
+mass : 102.0
+Tref : 25.0
+k1 : 0.0
+name : Turnigy 3508-580KV Multistar
+I0 : 0.4
+Imax : 26.0
+Kv : 580.0
+k3 : 0.4
+Rthws : 0.0
+Rthwm : 0.0
+use_thermal : False
+alpham : -0.0012
+Rthma : 0.0

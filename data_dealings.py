@@ -407,13 +407,16 @@ def get_APC_data(propeller):
             for row in reader:
                 if row['J']==None:
                     break
-                if float(row['J'])==0:
-                    C_Q_points_static.append(float(row['Cp'])/(2*np.pi))
-                    C_T_points_static.append(float(row['Ct']))
-                    tip_vel_rot=rpm*2*np.pi/60*D/2
-                    Re=tip_vel_rot*D/(1.5*10**-5)
-                    Re_points_static.append(Re)
-                    n_points_static.append(rpm/60)
+                try:
+                    if float(row['J'])==0:
+                        C_Q_points_static.append(float(row['Cp'])/(2*np.pi))
+                        C_T_points_static.append(float(row['Ct']))
+                        tip_vel_rot=rpm*2*np.pi/60*D/2
+                        Re=tip_vel_rot*D/(1.5*10**-5)
+                        Re_points_static.append(Re)
+                        n_points_static.append(rpm/60)
+                except ValueError:
+                    continue
                 
                 no_points=no_points+1
                 C_Q_points.append(float(row['Cp'])/(2*np.pi))
@@ -482,7 +485,7 @@ def generate_xlfr5_constants(data_file):
                     if not row['alpha']: #Break on empty row
                         break
     #                print(row)
-                    alpha_data.append(float(row['alkha']))
+                    alpha_data.append(float(row['alpha']))
                     beta_data.append(float(row['Beta']))
                     CL_data.append(float(row['CL']))
                     CDi_data.append(float(row['CDi']))
@@ -495,7 +498,8 @@ def generate_xlfr5_constants(data_file):
                     Cni_data.append(float(row['Cni']))
                     Qinf_data.append(float(row['QInf']))
                     XCP_data.append(float(row['XCP']))
-            except KeyError:
+            except KeyError as e:
+                print(e)
                 coeffs=[0,0,0]
                 return coeffs
         else:
@@ -570,5 +574,6 @@ if __name__ == "__main__":
     
     colors = iter(cm.rainbow(np.linspace(0, 1, 10)))
     data_file="./xflr5_results/T2-VLM2.csv"
-    generate_xlfr5_constants(data_file)
+    coefs=generate_xlfr5_constants(data_file)
+    print(coefs)
 #    get_APC_data(propeller1)

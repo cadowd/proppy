@@ -1,0 +1,18 @@
+// File defining motor constants and values to be read into dictionary
+R : 0.12
+k3 : 0.4
+Imax : 24.0
+I0 : 0.4
+use_thermal : False
+k1 : 0.0
+mass : 69.5
+Rthwm : 0.0
+alphar : 0.004
+Rthsa : 0.0
+Rthma : 0.0
+alpham : -0.0012
+name : AXI 2217-16 GOLD LINE V2
+Rthws : 0.0
+k2 : 0.0
+Tref : 25.0
+Kv : 1050.0

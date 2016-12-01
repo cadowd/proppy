@@ -150,6 +150,8 @@ class quad_optimise_window(QtGui.QDialog):
                 
         if len(calc_list)==0:
             return
+            
+        print(len(calc_list))
         self.prog_widget = QtGui.QProgressDialog("Optimising selection", "Stop the madness!",0,no_to_plot)
         self.prog_widget.setWindowModality(QtCore.Qt.WindowModal)
 #        self.prog_widget.setMinimumDuration(0)
@@ -179,7 +181,7 @@ class quad_optimise_window(QtGui.QDialog):
             if result['Imax']>max_I_perc*motor_dict['Imax']:
                 print('overcurrent')
                 continue
-            max_acc=result['Tmax']*no_motors/mass - mass*9.8
+            max_acc=result['Tmax']*no_motors/mass - 9.8
             if max_acc<min_acc:
                 print('Low acc ' + str(max_acc) + "m/s/s")
                 continue

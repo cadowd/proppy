@@ -879,7 +879,7 @@ class edit_plane_window(QtGui.QDialog):
          folder,"XFLR5 polars (*.csv)")
          
         coeffs=data_dealings.generate_xlfr5_constants(xflr5_file)
-        if coeffs==[0,0,0]:
+        if all([ v == 0 for v in coeffs ]):
             QtGui.QMessageBox.warning(self, 'No coefficients extracted',
                                             "Please check to ensure file selected is a valid XFLR5 type 2 exported polar.",
                                             QtGui.QMessageBox.Ok)
@@ -947,7 +947,7 @@ class edit_motor_window(QtGui.QDialog):
         file_name=self.lineEdit_display_name.text()
         motor={
         'use_thermal': self.checkBox_use_thermal.isChecked(),
-        'name': self.lineEdit_search_name.text() if self.checkBox_has_data.isChecked() else self.lineEdit_display_name.text(),
+        'name': self.lineEdit_display_name.text(),
         'mass': self.doubleSpinBox_mass.value(),
         'Kv': self.doubleSpinBox_Kv.value(),
         'I0': self.doubleSpinBox_I0.value(),

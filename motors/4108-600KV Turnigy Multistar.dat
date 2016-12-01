@@ -1,0 +1,18 @@
+// File defining motor constants and values to be read into dictionary
+I0 : 0.9
+alpham : -0.0012
+k2 : 0.0
+mass : 111.0
+use_thermal : False
+k3 : 0.9
+Kv : 600.0
+Rthsa : 0.0
+Rthws : 0.0
+Imax : 26.0
+k1 : 0.0
+Rthwm : 0.0
+R : 0.098
+alphar : 0.004
+name : 4108-600KV Turnigy Multistar
+Rthma : 0.0
+Tref : 25.0

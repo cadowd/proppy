@@ -1,0 +1,18 @@
+// File defining motor constants and values to be read into dictionary
+mass : 97.0
+Kv : 630.0
+alphar : 0.004
+k2 : 0.0
+Rthsa : 0.0
+name : T-motor MN3510 630Kv
+Imax : 22.0
+Rthws : 0.0
+Rthma : 0.0
+use_thermal : False
+R : 0.065
+k1 : 0.0
+I0 : 0.5
+Tref : 25.0
+alpham : -0.0012
+Rthwm : 0.0
+k3 : 0.5

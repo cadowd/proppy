@@ -1,0 +1,18 @@
+// File defining motor constants and values to be read into dictionary
+R : 0.16
+k3 : 0.8
+Imax : 18.0
+I0 : 0.8
+use_thermal : False
+k1 : 0.0
+mass : 87.0
+Rthwm : 0.0
+alphar : 0.004
+Rthsa : 0.0
+Rthma : 0.0
+alpham : -0.0012
+name : NTM Prop Drive Series 2836 750kv
+Rthws : 0.0
+k2 : 0.0
+Tref : 25.0
+Kv : 750.0

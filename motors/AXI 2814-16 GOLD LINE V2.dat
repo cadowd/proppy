@@ -1,0 +1,18 @@
+// File defining motor constants and values to be read into dictionary
+name : AXI 2814-16 GOLD LINE V2
+Tref : 25.0
+k2 : 0.0
+alpham : -0.0012
+Imax : 32.0
+Kv : 1035.0
+mass : 107.0
+Rthws : 0.0
+k1 : 0.0
+Rthsa : 0.0
+I0 : 1.0
+R : 0.085
+Rthwm : 0.0
+use_thermal : False
+alphar : 0.004
+Rthma : 0.0
+k3 : 1.0
