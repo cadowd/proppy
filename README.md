@@ -74,10 +74,17 @@ This plot shows the combinations power consumption. Here we see that I was actua
 Adding new motors is a fairly easy task, with accurate estimations of the motor's performance obtainable with only the motor's Kv, internal resistance, no load current and maximum allowed current.
 
 **Display name:**Motor mass: The mass of the motor in grams. This value is only used if the motor mass is a criterion of the optimisation, so can be left as zero if it is of no interest or unknown.
+
 **Kv:** This value is also referred to as the motor constant, speed constant or back emf constant. It is the inverse of the motor torque constant. Generally manufacturers give this constant in RPM/V, if not then the units need to be converted. For the theoretical motor calculations this is the most important value.
+
 **No load current:** This is the current the motor pulls at a nominal voltage with no load attached. Typically this is given at 10V, or a voltage close to the nominal operating conditions. This is a value that helps to characterise some of the losses of the motor.
+
 **Maximum current:** This is the maximum allowed current of the motor for 60 seconds of continuous operation. Surpassing this value will lead to burning out the motor, and is a serious risk of improperly matched motor-propeller combinations. This value is used mainly to eliminate motor-propeller combinations during optimisation that risk over heating the motor.
+
 **Internal resistance:** This value is the electrical resistance of the windings in Ohms, and characterises the iron losses of the motor. It is also used to calculate the heat generated, as electrical resistance is the main heat source within the motor.
+
 **Motor constant reference temperature:** This is the temperature at which these theoretical values of the motor are taken. The motor constants and resistance are affected by temperature, and thus will change in hotter or colder environments. Note that this value is not the ambient temperature, rather the reference temperature of the motor values so should just be set to 20 or 25 degrees. If the ambient temperature is changed in the atmosphere conditions settings, the motor performance will be slightly affected, even without the thermal model enabled.
+
 **Loss constants:** The motor uses a three constant model to characterise its losses. K3 represents the lowest order losses, k2 is the second order losses and k1 is the highest order losses. Typically, most of the losses of the motor can be characterised with a first order model, and so only k3 is needed. The value of k3 is approximately the no load current, which should be used in the absence of real data.
+
 **Thermal characteristics:** The theoretical model of the motor includes a full three component thermal model, a full explanation of the thermal values can be found in the theory section. In general however, the thermal constants are more difficult to calculate and as the thermal effects are generally quite small if the motor is not operating near its limits, the thermal model is not too significant.
