@@ -22,10 +22,10 @@ along with PropPy.  If not, see <http://www.gnu.org/licenses/>.
 @author: c.dowd
 """
 
-from PyQt4 import QtCore, QtGui, uic
+from PyQt5 import QtCore, QtGui, uic, QtWidgets
 import data_dealings
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_qt4agg import (
+from matplotlib.backends.backend_qt5agg import (
     FigureCanvasQTAgg as FigureCanvas,
     NavigationToolbar2QT as NavigationToolbar)
 import numpy as np
@@ -75,7 +75,7 @@ def do_calc(self, motor_dat, prop_dat, thrust):
     return result
 
 
-class quad_optimise_window(QtGui.QDialog):
+class quad_optimise_window(QtWidgets.QDialog):
     def __init__(self, propellers, motors, options):
         super(quad_optimise_window, self).__init__()
         uic.loadUi("./UI/quad_optimisation_window.ui", self)
@@ -131,9 +131,9 @@ class quad_optimise_window(QtGui.QDialog):
         max_I_perc=self.doubleSpinBox_max_I.value()/100
         
         if mass==0:
-            QtGui.QMessageBox.warning(self, 'No craft mass',
+            QtWidgets.QMessageBox.warning(self, 'No craft mass',
                                             "Input the mass of the craft.",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
             return
         
         no_to_plot=0
@@ -152,7 +152,7 @@ class quad_optimise_window(QtGui.QDialog):
             return
             
         print(len(calc_list))
-        self.prog_widget = QtGui.QProgressDialog("Optimising selection", "Stop the madness!",0,no_to_plot)
+        self.prog_widget = QtWidgets.QProgressDialog("Optimising selection", "Stop the madness!",0,no_to_plot)
         self.prog_widget.setWindowModality(QtCore.Qt.WindowModal)
 #        self.prog_widget.setMinimumDuration(0)
         self.prog_widget.show()
@@ -163,11 +163,11 @@ class quad_optimise_window(QtGui.QDialog):
         self.prog_widget.setValue(0)
         result_list=[]
         for calc_dict in calc_list:
-            QtGui.QApplication.instance().processEvents()
+            QtWidgets.QApplication.instance().processEvents()
             if self.prog_widget.wasCanceled():
-                QtGui.QMessageBox.information(self, 'Optimisation cancelled',
+                QtWidgets.QMessageBox.information(self, 'Optimisation cancelled',
                                         "The optimisation has been cancelled.",
-                                        QtGui.QMessageBox.Ok)
+                                        QtWidgets.QMessageBox.Ok)
                 return
 
             result = do_calc(self, calc_dict['motor'], calc_dict['prop'], thrust_optimise)
@@ -191,9 +191,9 @@ class quad_optimise_window(QtGui.QDialog):
             result_list.append(result)
         
         if len(result_list)<1:
-            QtGui.QMessageBox.warning(self, 'No suitable combinations found',
+            QtWidgets.QMessageBox.warning(self, 'No suitable combinations found',
                                             "No combinations were found that match your constraints. Consider loosening the constraints or selecting different components.",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
             return
 #            self.single_plot(result, axes)
         axes.set_xlabel(r"System thrust per motor[N]")

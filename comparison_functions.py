@@ -131,6 +131,8 @@ def check_Psurfs(motors,propellers,Urange, Trange, folder, battery, atmosphere):
     }
     
     regen=False
+    if not os.path.exists(folder):
+        os.makedirs(folder)
     try:
         last_gen_props = pickle.load( open( folder + 'generation_properties.pk', "rb" ) )
         for key in last_gen_props.keys():
@@ -140,6 +142,7 @@ def check_Psurfs(motors,propellers,Urange, Trange, folder, battery, atmosphere):
                 regen=True
     except IOError:
         pass
+    
     #We err on the side of safety and instantly delete ALL the power surfaces if the settings have changed.
     #This could end up being really annoying. I'll see. There's smarter ways of doing this anyway.
     if regen:
@@ -148,6 +151,7 @@ def check_Psurfs(motors,propellers,Urange, Trange, folder, battery, atmosphere):
                 if file.endswith(".pk"):
                     os.remove(folder + file)
     combo_list=[]
+    
     for motor in motors:
         for propeller in propellers:
             combo_name=motor['name'] +' - ' + propeller['name']
@@ -160,8 +164,12 @@ def check_Psurfs(motors,propellers,Urange, Trange, folder, battery, atmosphere):
             'propeller': propeller}
             combo_list.append(combo_dict)
         #Dump this steamer
-    with open(folder + 'generation_properties.pk', 'wb') as f:
-        pickle.dump(generation_properties, f)
+    try:
+        with open(folder + 'generation_properties.pk', 'wb') as f:
+            pickle.dump(generation_properties, f)
+    except Exception as e:
+        print(e)
+        
     return combo_list
 
 def gen_single_Psurf(combo_dict,Urange, Trange, folder, battery, atmosphere):

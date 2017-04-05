@@ -23,14 +23,14 @@ along with PropPy.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import sys
-from PyQt4 import QtCore, QtGui, uic
+from PyQt5 import QtCore, QtGui, uic, QtWidgets
 
 import os
 from matplotlib.figure import Figure
 import itertools
 import numpy as np
 import scipy as sp
-from matplotlib.backends.backend_qt4agg import (
+from matplotlib.backends.backend_qt5agg import (
     FigureCanvasQTAgg as FigureCanvas,
     NavigationToolbar2QT as NavigationToolbar)
     
@@ -133,9 +133,9 @@ def get_prop_dict(self, prop_dat):
             [str_start,str_end]=prop_dat.rsplit('x',1)
             prop_dia=float(str_start.rsplit('_')[-1])*0.0254
         except Exception:
-            QtGui.QMessageBox.warning(self, 'Error in propeller file name.',
+            QtWidgets.QMessageBox.warning(self, 'Error in propeller file name.',
                                 prop_dat + " does not match the required naming format. No diameter could be calculated.",
-                                QtGui.QMessageBox.Ok)
+                                QtWidgets.QMessageBox.Ok)
             return
     propeller={
     'name':prop_dat, 
@@ -160,9 +160,9 @@ def do_calc(self, motor_dat, prop_dat, plane_dat):
         
     results=consumption_functions.P_el_calculator(motor_funcs,prop_funcs,plane, battery, atmosphere)
     if results==[]:
-        QtGui.QMessageBox.warning(self, 'Not enough thrust for flight',
+        QtWidgets.QMessageBox.warning(self, 'Not enough thrust for flight',
                     "The selection of " + propeller['name'] + " and " + motor['name'] + " is atrocious, this combination does not provide enough thrust for flight, check the battery settings perhaps.",
-                    QtGui.QMessageBox.Ok)
+                    QtWidgets.QMessageBox.Ok)
     U_array=np.array([result['U'] for result in results])
     rpm_array=[result['omega']*30/np.pi for result in results]
     Pel_array=np.array([result['P_el'] for result in results])
@@ -198,9 +198,9 @@ def do_calc(self, motor_dat, prop_dat, plane_dat):
     return result
     
     
-class main_window(QtGui.QMainWindow, Ui_MainWindow):
+class main_window(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
-        QtGui.QMainWindow.__init__(self)
+        QtWidgets.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
 
         self.setupUi(self)
@@ -321,9 +321,9 @@ class main_window(QtGui.QMainWindow, Ui_MainWindow):
             prop_dat=return_selected_values(self.listView_props)[0]
             plane_dat=return_selected_values(self.listView_planes)[0]
         except Exception:
-            QtGui.QMessageBox.warning(self, 'Select a motor, propeller and plane.',
+            QtWidgets.QMessageBox.warning(self, 'Select a motor, propeller and plane.',
                                             "The system of interest must be selected (different to being checked).",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
             return        
         
         result = do_calc(self, motor_dat, prop_dat, plane_dat)
@@ -359,9 +359,9 @@ Maximum thrust at takeoff: {:0.2f} N \n
 Maximum acceleration at takeoff: {:0.2f} m/s/s \n
 """.format(motor_dat,prop_dat,plane_dat,etamax,umax, cruise_vel, umin,Iflight_str, Istatic_str,T_static, max_acc)
 
-        QtGui.QMessageBox.information(self, 'Details of selection.',
+        QtWidgets.QMessageBox.information(self, 'Details of selection.',
                                 risk_string,
-                                QtGui.QMessageBox.Ok)
+                                QtWidgets.QMessageBox.Ok)
         
     
     def plot(self, axes):
@@ -374,9 +374,9 @@ Maximum acceleration at takeoff: {:0.2f} m/s/s \n
         planes=return_checked_values(self.listView_planes)
         
         if len(motors)==0 or len(props)==0 or len(planes)==0:
-            QtGui.QMessageBox.warning(self, 'Select a motor, propeller and plane.',
+            QtWidgets.QMessageBox.warning(self, 'Select a motor, propeller and plane.',
                                             "A motor, propeller and plane must be selected to plot.",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
             return
         
         no_to_plot=0
@@ -396,7 +396,7 @@ Maximum acceleration at takeoff: {:0.2f} m/s/s \n
 
         if len(calc_list)==0:
             return
-        self.prog_widget = QtGui.QProgressDialog("Plotting selection", "Stop the madness!",0,no_to_plot)
+        self.prog_widget = QtWidgets.QProgressDialog("Plotting selection", "Stop the madness!",0,no_to_plot)
         self.prog_widget.setWindowModality(QtCore.Qt.WindowModal)
 #        self.prog_widget.setMinimumDuration(0)
         self.prog_widget.show()
@@ -406,11 +406,11 @@ Maximum acceleration at takeoff: {:0.2f} m/s/s \n
         self.prog_widget.setValue(0)
 
         for calc_dict in calc_list:
-            QtGui.QApplication.instance().processEvents()
+            QtWidgets.QApplication.instance().processEvents()
             if self.prog_widget.wasCanceled():
-                QtGui.QMessageBox.information(self, 'Plotting cancelled',
+                QtWidgets.QMessageBox.information(self, 'Plotting cancelled',
                                         "The plotting has been cancelled.",
-                                        QtGui.QMessageBox.Ok)
+                                        QtWidgets.QMessageBox.Ok)
                 return
 
             result = do_calc(self, calc_dict['motor'], calc_dict['prop'], calc_dict['plane'])
@@ -510,9 +510,9 @@ Maximum acceleration at takeoff: {:0.2f} m/s/s \n
 
         motor_dat=return_selected_values(self.listView_motors)
         if len(motor_dat)==0:
-            QtGui.QMessageBox.warning(self, 'No motor selected to edit.',
+            QtWidgets.QMessageBox.warning(self, 'No motor selected to edit.',
                                             "Please select a motor from the list for editing.",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
             return
         motor=data_dealings.read_dict_file('./motors/' + motor_dat[0] + '.dat')
         self.edit_motor_dialog.motor_edited=motor
@@ -543,9 +543,9 @@ Maximum acceleration at takeoff: {:0.2f} m/s/s \n
         
         plane_dat=return_selected_values(self.listView_planes)
         if len(plane_dat)==0:
-            QtGui.QMessageBox.warning(self, 'No plane selected to edit.',
+            QtWidgets.QMessageBox.warning(self, 'No plane selected to edit.',
                                             "Please select a plane from the list for editing.",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
             return
         plane=data_dealings.read_dict_file('./planes/' + plane_dat[0] + '.dat')
         self.plane_dialog.plane_edited=plane_dat[0]
@@ -575,9 +575,9 @@ Maximum acceleration at takeoff: {:0.2f} m/s/s \n
         try:
             coeffs=np.polyfit(window.Cl, window.Cd, 2)
         except AttributeError:
-            QtGui.QMessageBox.warning(self, 'Polar has not yet been calculated',
+            QtWidgets.QMessageBox.warning(self, 'Polar has not yet been calculated',
                                             "Please fill in all boxes to calculate the polar coefficients.",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
             return
         
         self.plane_dialog.doubleSpinBox_C1.setValue(coeffs[0])
@@ -640,15 +640,15 @@ Maximum acceleration at takeoff: {:0.2f} m/s/s \n
         planes=return_checked_values(self.listView_planes)
 
         if len(motors)==0 or len(propellers)==0 or len(planes)==0:
-            QtGui.QMessageBox.warning(self, 'Select a motor, propeller and plane.',
+            QtWidgets.QMessageBox.warning(self, 'Select a motor, propeller and plane.',
                                             "A motor, propeller and plane must be selected for optimisation.",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
             return
             
         if len(planes)>1:
-            QtGui.QMessageBox.warning(self, 'Too many planes selected',
+            QtWidgets.QMessageBox.warning(self, 'Too many planes selected',
                                             "Only a single plane may be selected for optimisation.",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
             return
         
         opt_settings=self.opt_settings
@@ -705,9 +705,9 @@ Maximum acceleration at takeoff: {:0.2f} m/s/s \n
 #        planes=return_checked_values(self.listView_planes)
 
         if len(motors)==0 or len(propellers)==0:
-            QtGui.QMessageBox.warning(self, 'Select at least one motor and one propeller',
+            QtWidgets.QMessageBox.warning(self, 'Select at least one motor and one propeller',
                                             "A motor and propeller must be selected for hover craft optimisation.",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
             return
         
         opt_settings=self.opt_settings
@@ -727,9 +727,9 @@ Maximum acceleration at takeoff: {:0.2f} m/s/s \n
         try:
             prop_dat=return_selected_values(self.listView_props)[0]
         except IndexError:
-            QtGui.QMessageBox.warning(self, 'No propeller selected.',
+            QtWidgets.QMessageBox.warning(self, 'No propeller selected.',
                                             "Please select a propeller from the list for analysis.",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
             return
         
         propeller=get_prop_dict(self, prop_dat)
@@ -749,7 +749,7 @@ Maximum acceleration at takeoff: {:0.2f} m/s/s \n
         self.propeller_dialog.exec_()
 
 
-class atmosphere_settings_window(QtGui.QDialog):
+class atmosphere_settings_window(QtWidgets.QDialog):
     def __init__(self):
         super(atmosphere_settings_window, self).__init__()
         uic.loadUi("./UI/dialog_atmosphere_settings.ui", self)
@@ -781,7 +781,7 @@ class atmosphere_settings_window(QtGui.QDialog):
         
         self.doubleSpinBox_rho.setValue(rho)
 
-class optimisation_settings_window(QtGui.QDialog):
+class optimisation_settings_window(QtWidgets.QDialog):
     def __init__(self):
         super(optimisation_settings_window, self).__init__()
         uic.loadUi("./UI/dialog_optimisation_settings.ui", self)
@@ -800,11 +800,11 @@ class optimisation_settings_window(QtGui.QDialog):
             for file in files:
                 if file.endswith(".pk"):
                     os.remove(folder + file)
-        QtGui.QMessageBox.information(self, 'Power surfaces deleted',
+        QtWidgets.QMessageBox.information(self, 'Power surfaces deleted',
                                             "All previously generated power surfaces have been deleted.",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
         
-class battery_settings_window(QtGui.QDialog):
+class battery_settings_window(QtWidgets.QDialog):
     def __init__(self):
         super(battery_settings_window, self).__init__()
         uic.loadUi("./UI/dialog_battery_settings.ui", self)
@@ -813,14 +813,14 @@ class battery_settings_window(QtGui.QDialog):
         self.doubleSpinBox_voltage.setValue(battery['V'])
         self.doubleSpinBox_capacity.setValue(battery['capacity'])
 
-class create_plane_window(QtGui.QDialog):
+class create_plane_window(QtWidgets.QDialog):
     def __init__(self):
         super(create_plane_window, self).__init__()
         uic.loadUi("./UI/dialog_create_plane.ui", self)
         self.pushButton_xflr5.clicked.connect(lambda: edit_plane_window.get_xflr5_file(self))
         self.buttonBox.accepted.connect(lambda: edit_plane_window.okay(self))
       
-class edit_plane_window(QtGui.QDialog):
+class edit_plane_window(QtWidgets.QDialog):
     def __init__(self):
         super(edit_plane_window, self).__init__()
         uic.loadUi("./UI/dialog_edit_plane.ui", self)
@@ -875,20 +875,20 @@ class edit_plane_window(QtGui.QDialog):
     def get_xflr5_file(self):
         cwd = os.getcwd()
         folder=cwd+"/xflr5_results/"
-        xflr5_file = QtGui.QFileDialog.getOpenFileName(self, 'Open xflr5 results polar file', 
+        xflr5_file = QtWidgets.QFileDialog.getOpenFileName(self, 'Open xflr5 results polar file', 
          folder,"XFLR5 polars (*.csv)")
          
         coeffs=data_dealings.generate_xlfr5_constants(xflr5_file)
         if all([ v == 0 for v in coeffs ]):
-            QtGui.QMessageBox.warning(self, 'No coefficients extracted',
+            QtWidgets.QMessageBox.warning(self, 'No coefficients extracted',
                                             "Please check to ensure file selected is a valid XFLR5 type 2 exported polar.",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
         self.doubleSpinBox_C1.setValue(coeffs[0])
         self.doubleSpinBox_C2.setValue(coeffs[1])
         self.doubleSpinBox_C3.setValue(coeffs[2])
 
         
-class new_motor_window(QtGui.QDialog):
+class new_motor_window(QtWidgets.QDialog):
     def __init__(self):
         super(new_motor_window, self).__init__()
         uic.loadUi("./UI/dialog_new_motor.ui", self)
@@ -897,7 +897,7 @@ class new_motor_window(QtGui.QDialog):
         self.pushButton_accept.clicked.connect(lambda: edit_motor_window.okay(self))
         self.pushButton_reject.clicked.connect(lambda: edit_motor_window.cancel(self))
         
-class edit_motor_window(QtGui.QDialog):
+class edit_motor_window(QtWidgets.QDialog):
     def __init__(self):
         super(edit_motor_window, self).__init__()
         uic.loadUi("./UI/dialog_edit_motor.ui", self)
@@ -1000,9 +1000,9 @@ class edit_motor_window(QtGui.QDialog):
                 self.close()
                 return
                 
-            QtGui.QMessageBox.warning(self, 'Motor edited',
+            QtWidgets.QMessageBox.warning(self, 'Motor edited',
                                             "Motor has been changed, its power surfaces must now be recalculated.",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
             for root, dirs, files in os.walk('./power_surface_precalcs/'):
                 for file in files:
                     if file.endswith(".pk") and motor['name'] in file:
@@ -1022,7 +1022,7 @@ class edit_motor_window(QtGui.QDialog):
     def cancel(self):
         self.close()
         
-class propeller_dialog_window(QtGui.QDialog):
+class propeller_dialog_window(QtWidgets.QDialog):
     def __init__(self, propeller,prop_funcs, atmosphere, battery):
         super(propeller_dialog_window, self).__init__()
         uic.loadUi("./UI/dialog_prop_functions.ui", self)
@@ -1045,9 +1045,9 @@ class propeller_dialog_window(QtGui.QDialog):
         V=self.doubleSpinBox_V.value()
         
         if Th==0:
-            QtGui.QMessageBox.warning(self, 'Thrust is 0',
+            QtWidgets.QMessageBox.warning(self, 'Thrust is 0',
                                             "Please input a non-zero propeller thrust",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
             return
         
         atmosphere=self.atmosphere
@@ -1064,9 +1064,9 @@ class propeller_dialog_window(QtGui.QDialog):
         while True:
             n+=1
             if n>nmax: #Stop if it doesn't converge
-                QtGui.QMessageBox.warning(self, 'Unable to calculate operating point',
+                QtWidgets.QMessageBox.warning(self, 'Unable to calculate operating point',
                                     "Check that your inputs are reasonable.",
-                                    QtGui.QMessageBox.Ok)
+                                    QtWidgets.QMessageBox.Ok)
                 break
                 return
 
@@ -1101,7 +1101,7 @@ class propeller_dialog_window(QtGui.QDialog):
         self.label_Imax.setText("Motor minimal current rating: {:0.2f}".format(Imax))
         
 if __name__ == "__main__":
-    app = QtGui.QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     window = main_window()
     window.show()
     sys.exit(app.exec_())

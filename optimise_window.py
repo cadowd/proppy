@@ -24,13 +24,13 @@ along with PropPy.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
 import time
-from PyQt4 import QtCore, QtGui, uic
+from PyQt5 import QtCore, QtGui, uic, QtWidgets
 import os
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 import itertools
 import numpy as np
-from matplotlib.backends.backend_qt4agg import (
+from matplotlib.backends.backend_qt5agg import (
     FigureCanvasQTAgg as FigureCanvas,
     NavigationToolbar2QT as NavigationToolbar)
     
@@ -49,7 +49,7 @@ Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 #dialog_edit_motor = uic.loadUiType("./UI/dialog_edit_motor.ui")
 
     
-class optimise_window(QtGui.QDialog):
+class optimise_window(QtWidgets.QDialog):
     def __init__(self, plane, propellers, motors, options):
         super(optimise_window, self).__init__()
         uic.loadUi("./UI/optimisation_window.ui", self)
@@ -164,10 +164,10 @@ class optimise_window(QtGui.QDialog):
         plane=self.plane
         
         
-        combo_list=comparison_functions.check_Psurfs(motors,propellers,Urange, Trange, folder, battery, atmosphere)
         
+        combo_list=comparison_functions.check_Psurfs(motors,propellers,Urange, Trange, folder, battery, atmosphere)
         if len(combo_list)>0:
-            progress_widgit=QtGui.QProgressDialog("Generating missing power surfaces", "Stop the madness!",0,len(combo_list))
+            progress_widgit=QtWidgets.QProgressDialog("Generating missing power surfaces", "Stop the madness!",0,len(combo_list))
             progress_widgit.setWindowModality(QtCore.Qt.WindowModal)
             
             progress_widgit.show()
@@ -176,9 +176,9 @@ class optimise_window(QtGui.QDialog):
                 comparison_functions.gen_single_Psurf(combo_dict,Urange, Trange, folder, battery, atmosphere)
                 progress_widgit.setValue(progress_widgit.value()+1)
                 if progress_widgit.wasCanceled():
-                    QtGui.QMessageBox.information(self, 'Optimisation cancelled',
+                    QtWidgets.QMessageBox.information(self, 'Optimisation cancelled',
                                             "The optimisation has been cancelled.",
-                                            QtGui.QMessageBox.Ok)
+                                            QtWidgets.QMessageBox.Ok)
                     return
         
         
@@ -214,14 +214,14 @@ class optimise_window(QtGui.QDialog):
         top_combos, report=comparison_functions.top_choices(plane, motors, propellers, atmosphere, folder, conditions, no_tops)
         print(len(top_combos))
         
-        QtGui.QMessageBox.information(self, 'Analysis complete.',
+        QtWidgets.QMessageBox.information(self, 'Analysis complete.',
                                 """Combinations analysed: {} \n
 Take off thrust too low: {} \n
 Maximum current too high: {} \n
 Over motor mass limit: {} \n
 Unable to produce enough thrust for flight: {} \n
 Suitable: {} \n""".format(report['analysed'], report['low_thrust'], report['over_current'], report['over_mass'],report['too_weak'],report['suitable']),
-                                QtGui.QMessageBox.Ok)
+                                QtWidgets.QMessageBox.Ok)
         
         combo_list = QtGui.QStandardItemModel(self.listView_results)
         for combo in top_combos:
