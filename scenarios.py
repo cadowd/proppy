@@ -104,7 +104,7 @@ def static_max_current(C,atmosphere,battery,motor,propeller):
     rpm=omega*60/(2*np.pi)
     I_bat=I_mot*C #Get battery current
 
-    return I_bat + motor['I0'], rpm, thrust
+    return I_bat + motor['I0'], rpm, thrust, Q
     
 if __name__ == "__main__":
     print("Run the main script")   

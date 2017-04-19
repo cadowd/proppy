@@ -14,10 +14,40 @@
    <string>Copter optimisation</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="3" column="1">
-    <widget class="QSpinBox" name="spinBox_no_motors">
-     <property name="value">
-      <number>4</number>
+   <item row="2" column="2" rowspan="11">
+    <widget class="QWidget" name="widget_plot" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>500</width>
+       <height>500</height>
+      </size>
+     </property>
+     <layout class="QVBoxLayout" name="layout_plot"/>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <widget class="QLabel" name="label_9">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Y axis</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="label_8">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>X axis</string>
      </property>
     </widget>
    </item>
@@ -31,6 +61,13 @@
      </property>
     </widget>
    </item>
+   <item row="3" column="1">
+    <widget class="QSpinBox" name="spinBox_no_motors">
+     <property name="value">
+      <number>4</number>
+     </property>
+    </widget>
+   </item>
    <item row="3" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
@@ -38,13 +75,13 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="2">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   <item row="1" column="2">
+    <widget class="QListView" name="listView_props"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Motors</string>
      </property>
     </widget>
    </item>
@@ -58,18 +95,15 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Motors</string>
+   <item row="14" column="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QListView" name="listView_props"/>
-   </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QListView" name="listView_motors"/>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="label">
@@ -81,7 +115,10 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="0" colspan="3">
+   <item row="1" column="0" colspan="2">
+    <widget class="QListView" name="listView_motors"/>
+   </item>
+   <item row="13" column="0" colspan="3">
     <widget class="QListView" name="listView_results"/>
    </item>
    <item row="5" column="1">
@@ -91,24 +128,6 @@
      </property>
      <property name="value">
       <double>2.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2" rowspan="7">
-    <widget class="QWidget" name="widget_plot" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>500</width>
-       <height>500</height>
-      </size>
-     </property>
-     <layout class="QVBoxLayout" name="layout_plot"/>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Propellers</string>
      </property>
     </widget>
    </item>
@@ -122,20 +141,10 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_voltage">
-     <property name="toolTip">
-      <string>Nominal voltage of battery and system</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="label_7">
-     <property name="toolTip">
-      <string>The percentage by which the combination is able to surpass the motor limit.</string>
-     </property>
+   <item row="0" column="2">
+    <widget class="QLabel" name="label_5">
      <property name="text">
-      <string>Max allowable current [%]</string>
+      <string>Propellers</string>
      </property>
     </widget>
    </item>
@@ -152,13 +161,6 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
-    <widget class="QPushButton" name="pushButton_optimise">
-     <property name="text">
-      <string>Optimise and return top</string>
-     </property>
-    </widget>
-   </item>
    <item row="7" column="1">
     <widget class="QSpinBox" name="spinBox_number">
      <property name="toolTip">
@@ -168,6 +170,36 @@
       <number>5</number>
      </property>
     </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_voltage">
+     <property name="toolTip">
+      <string>Nominal voltage of battery and system</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QPushButton" name="pushButton_optimise">
+     <property name="text">
+      <string>Optimise and return top</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_7">
+     <property name="toolTip">
+      <string>The percentage by which the combination is able to surpass the motor limit.</string>
+     </property>
+     <property name="text">
+      <string>Max allowable current [%]</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0" colspan="2">
+    <widget class="QComboBox" name="comboBox_xaxis"/>
+   </item>
+   <item row="11" column="0" colspan="2">
+    <widget class="QComboBox" name="comboBox_yaxis"/>
    </item>
   </layout>
  </widget>

@@ -1,2 +1,4 @@
 *.pk
 *_pycache_
+*.pyc
+*.dat

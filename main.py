@@ -335,7 +335,7 @@ class main_window(QtWidgets.QMainWindow, Ui_MainWindow):
         cruise_vel=result['drag_min_vel']
         motor=data_dealings.read_dict_file('./motors/' + motor_dat + '.dat')
         propeller=get_prop_dict(self, prop_dat)
-        Imax_static, rpm_static, T_static=scenarios.static_max_current(1.0,self.atmosphere,self.battery,motor,propeller)
+        Imax_static, rpm_static, T_static, Q_static =scenarios.static_max_current(1.0,self.atmosphere,self.battery,motor,propeller)
         
         Imax_flight_percent = Imax_flight/motor['Imax']*100
         Imax_static_percent = Imax_static/motor['Imax']*100
