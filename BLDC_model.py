@@ -39,7 +39,7 @@ def Vsurf(Qout,omega, motor, atmosphere):
     as its running temperature for a given torque and motor speed. The inputs
     can be given as numpy arrays to speed the calculations.
     """
-    Qout=np.array(Qout)
+    Qout=np.array(abs(Qout))
     omega=np.array(omega)
     i0=motor['I0']
     T0=motor['Tref']
@@ -79,7 +79,9 @@ def Vsurf(Qout,omega, motor, atmosphere):
     n=0 #no iterations
     Pout=Qout*omega #Total mechanical power out
     
-    Ifr=k3+k2*omega+k1*omega**2 #friction current (extra current required to overcome friction)
+    Fa=omega/(10*Kv0) #assume no load current is measured at 10V, linear relationship
+    
+    Ifr=k3*Fa+k2*omega+k1*omega**2 #friction current (extra current required to overcome friction)
     I=Qout/KT+Ifr
     nmax=100 #max iterations
     maxTemp=2000 #max allowable motor temperature

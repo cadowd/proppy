@@ -32,6 +32,7 @@ from scipy.optimize import fsolve
 from scipy.interpolate import interp1d
 import BLDC_model
 
+import data_extraction
 
 def static_max_current(C,atmosphere,battery,motor,propeller):
     """
@@ -39,29 +40,28 @@ def static_max_current(C,atmosphere,battery,motor,propeller):
     stationairy. Returns MOTOR current, not the current taken by the controller.
     """
     V_in=C*battery['V']
-    #print(V_in)
+    
     rho=atmosphere['rho']
     D=propeller['diameter']  
     
     C_Q_interp, C_T_interp, bounds=data_dealings.prop_data_funcs(propeller)
     #Motor models
     Kv0=motor['Kv']*2*np.pi/60
-    maxQ=100/Kv0 #Max torque at 100 amps. Thats an insane value but whatever.
-    maxomega=25*Kv0 #Max omega at 25 volts. Quite a lot.
+    maxomega=battery['V']*Kv0 #Max omega at full voltage, won't ever be reached.
+    
     Vinterp_func=None
-    mot_bounds=[0,maxQ, 0, maxomega]
+
     I_func=None
     
     #Initial bounds to search for the rotational speed, should contain decent guesses for all possible flight RPMs
     omega_search_min=0 #Don't bother with speeds that are highly unlikely to provide thrust, ie; outside bounds of surface
-#    print(omega_search_min)
-    omega_search_max=mot_bounds[3]* battery['V']/12
     
-    omega_range=np.linspace(omega_search_min,omega_search_max,50)
+    omega_range=np.linspace(omega_search_min,maxomega,50)
 
 
     
     Q_range=data_dealings.prop_data_static_Q(omega_range,propeller,atmosphere)
+    #Get motor voltage and current for the propeller curve
     if Vinterp_func is not None: 
         V_mot=Vinterp_func(Q_range,omega_range)
 #        if V_mot!=V_mot: #If the values requested are outside the motor surface bounds, skip it
@@ -71,10 +71,10 @@ def static_max_current(C,atmosphere,battery,motor,propeller):
     else:
         V_mot, I_mot, Temp= BLDC_model.Vsurf(Q_range,omega_range, motor, atmosphere)
     
-#    print(V_mot)
-    V_interp=interp1d(V_mot, omega_range, kind='linear')
-    omega=[]
     
+    V_interp=interp1d(V_mot, omega_range, kind='quadratic')
+    omega=[]
+    #Find the omega that corresponds to each command voltage
     try:
         for V in V_in:
             try:
@@ -88,6 +88,7 @@ def static_max_current(C,atmosphere,battery,motor,propeller):
             omega=float('nan')
 
     omega=np.array(omega)
+    #Get torque and thrust for each of these real omega values
     Q=data_dealings.prop_data_static_Q(omega,propeller,atmosphere)
     thrust=data_dealings.prop_data_static_T(omega,propeller,atmosphere)
 
@@ -104,8 +105,9 @@ def static_max_current(C,atmosphere,battery,motor,propeller):
     rpm=omega*60/(2*np.pi)
     I_bat=I_mot*C #Get battery current
 
-    return I_bat + motor['I0'], rpm, thrust, Q
+    return I_bat, rpm, thrust, Q
     
 if __name__ == "__main__":
-    print("Run the main script")   
+    print("Run the main script")
+
     

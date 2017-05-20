@@ -49,10 +49,12 @@ def do_calc(self, motor_dat, prop_dat, thrust):
     motor=data_dealings.read_dict_file('./motors/' + motor_dat + '.dat')
     propeller=main.get_prop_dict(self, prop_dat)
     
+    
     Imax, rpm_static, Tmax, Q_static =scenarios.static_max_current(C,self.atmosphere,self.battery,motor,propeller)
     
 #    print(Tmax)
     I_interp=interp1d(Tmax, Imax, kind='linear')
+    
 #    print(thrust)
 #    print(np.nanmax(Tmax))
     try:
@@ -60,8 +62,11 @@ def do_calc(self, motor_dat, prop_dat, thrust):
     except ValueError:
 #        print(e)
         I_thrust=float('nan')
+
     Pel_nom=self.battery['V']*I_thrust
     Pel=self.battery['V']*Imax
+
+    efficiency=(Q_static*rpm_static*2*np.pi/60)/Pel
     result={
     'Current [A]': Imax,
     'RPM': rpm_static,
@@ -71,7 +76,8 @@ def do_calc(self, motor_dat, prop_dat, thrust):
     'Imax': np.nanmax(Imax),
     'Tmax': np.nanmax(Tmax),
     'Pel_nom': Pel_nom,
-    'Power [W]': Pel
+    'Power [W]': Pel,
+    'Motor efficiency [%]': efficiency*100
     }
     
     
@@ -118,7 +124,7 @@ class quad_optimise_window(QtWidgets.QDialog):
         
     def pop_combo_box(self):
         """
-        Function to populate combo box with keys in csv files.
+        Function to populate combo box with keys in dictionary.
         """
         existing_items=[self.comboBox_xaxis.itemText(i) for i in range(self.comboBox_xaxis.count())]
         
@@ -128,7 +134,6 @@ class quad_optimise_window(QtWidgets.QDialog):
             for key in item_model.item(0).combo.keys():
 #                print(self.current_data[0][key][0])
                 test_value=item_model.item(0).combo[key]
-                print(key)
                 if (isinstance(test_value, (collections.Sequence, np.ndarray)) and not isinstance(test_value, str) 
                 and key not in existing_items): #make sure its a list to plot
                     self.comboBox_xaxis.addItem(key)
