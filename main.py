@@ -441,7 +441,7 @@ Maximum acceleration at takeoff: {:0.2f} m/s/s \n
         elif self.radioButton_V_eta_mot.isChecked():
             axes.plot(result['U'], result['eta_mot'], label=line_label, color=c, marker='x')
 #        self.addmpl(fig1)
-        axes.legend(loc=4)
+        axes.legend(loc=1)
 #        axes.axis([11, 24, 0, 200])
         if self.radioButton_V_Pel.isChecked():
             axes.set_ylabel(r"Consumed power [W]")
@@ -1193,7 +1193,6 @@ class kv_dialog_window(QtWidgets.QDialog):
     def calculate(self):
         
         Th=self.doubleSpinBox_Th.value()*9.8*1000
-        V=self.doubleSpinBox_V.value()
         
         if Th==0:
             QtWidgets.QMessageBox.warning(self, 'Thrust is 0',
@@ -1203,53 +1202,7 @@ class kv_dialog_window(QtWidgets.QDialog):
         
         atmosphere=self.atmosphere
         rho=atmosphere['rho']
-        D=propeller['diameter']
-#        Jrange=np.linspace(0,prop_funcs['bounds'][3],100)
-#        C_T=prop_funcs['C_T_interp'](Jrange,Rerange)
-#        U=prop_funcs['bounds'][3]*omega_search_max/np.pi*0.5*D
         
-        omega_search=np.sqrt(Th/(0.05*rho*D**4))
-        n=0
-        nmax=10
-        #This is an absolutely TERRIBLE way of doing this but I didn't have time to do it neatly
-        while True:
-            n+=1
-            if n>nmax: #Stop if it doesn't converge
-                QtWidgets.QMessageBox.warning(self, 'Unable to calculate operating point',
-                                    "Check that your inputs are reasonable.",
-                                    QtWidgets.QMessageBox.Ok)
-                break
-                return
-
-            omega_search_min=0.5*omega_search-10
-            omega_search_min=max([0,omega_search_min])
-            omega_search_max=2*omega_search
-            omega_range=np.linspace(omega_search_min,omega_search_max,100)
-            
-            Th_range=consumption_functions.propT(omega_range,U, prop_funcs['C_T_interp'], prop_funcs['bounds'], propeller,self.atmosphere)
-#            print(Th_range)
-            omega_int=interp1d(Th_range, omega_range, kind='linear')
-            try:
-                omega=float(omega_int(Th))
-                break
-            except ValueError as e:
-#                print(e)
-                if "A value in x_new is above the interpolation range." in str(e):
-                    omega_search=omega_search_max
-                elif "A value in x_new is below the interpolation range." in str(e):
-                    omega_search=omega_search_min
-#                break
-        Q=consumption_functions.propQ(omega,U, prop_funcs['C_Q_interp'], prop_funcs['bounds'], propeller,self.atmosphere)[0]
-#        print(Q)
-        self.label_RPM.setText("Propeller RPM: {:0.2f}".format(omega*30/np.pi))
-        self.label_Q.setText("Propeller torque: {:0.2f} mN m".format(Q*1000))
-        
-        Kv_min=omega*30/np.pi/V
-        KT=V/omega
-        Imax=Q/KT
-        
-        self.label_Kv.setText("Minimal Motor Kv: {:0.0f}".format(Kv_min))
-        self.label_Imax.setText("Motor minimal current rating: {:0.2f}".format(Imax))
         
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

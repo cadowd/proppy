@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Propeller functions</string>
+   <string>Hover Kv selection</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="8" column="1" colspan="2">

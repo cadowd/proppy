@@ -187,13 +187,13 @@ def gen_single_Psurf(combo_dict,Urange, Trange, folder, battery, atmosphere):
     #Here we do the actually difficult calculation. 
     print('Calculating power surface for motor: ' + motor['name'] + ' propeller: ' + propeller['name'])
     U, T, eta_system, P_el, I_bat, Pelinterp_func = eff_space(Urange, motor, propeller, battery, atmosphere)
+    
     #Reinterpolate it onto the mesh. All hail the mesh.
     Psurf = Pelinterp_func(Umesh,Tmesh)
     
 
     #Get the maximum thrust and current in static conditions
     Imax, rpm_static, Tmax=scenarios.static_max_current(1.0,atmosphere,battery,motor,propeller)
-
 #            Psurf_col=np.dstack((Psurf_col,Psurf)) #Collect power surface
 #            motor_list.append(motor)
 #            prop_list.append(propeller)
@@ -442,7 +442,7 @@ def top_choices(plane, motors, propellers, atmosphere,  folder, conditions, numb
                 d_max_vel=drag_min_vel.x
                 drag_min=optimised_consumption.dragFunc(d_max_vel, plane, atmosphere)
                 P_d_max=Pfunc(d_max_vel, drag_min)
-#                print(P_d_max)
+                
                 if P_d_max!=P_d_max:
                     no_too_weak +=1
                     continue
@@ -454,24 +454,19 @@ def top_choices(plane, motors, propellers, atmosphere,  folder, conditions, numb
                     try:
                         P_min_vel=sp.optimize.minimize_scalar(lambda x : Pfunc(x, optimised_consumption.dragFunc(x, plane, atmosphere)), bounds=(0.5, max(Urange)), method='bounded')
                         P_min_vel=P_min_vel.x
-                        P_min=Pfunc(P_min_vel, optimised_consumption.dragFunc(P_min_vel, plane, atmosphere))
+                        P_min_vel_drag=optimised_consumption.dragFunc(P_min_vel, plane, atmosphere)
+                        P_min=Pfunc(P_min_vel, P_min_vel_drag)
                     except Exception as e:
                         print(e)
                         pass
                     result['max_time']=int(Capacity/P_min)
                     result['max_time_speed']=P_min_vel
+                    result['max_time_drag']=P_min_vel_drag
                     result['max_time_distance']=result['max_time']*result['max_time_speed']
                     
-#                    try:
-#                        d_max_vel=sp.optimize.minimize_scalar(lambda x : optimised_consumption.dragFunc(x, plane, atmosphere), bounds=(0.5, max(Urange)), method='bounded')
-#                        d_max_vel=d_max_vel.x
-#                        P_d_max=Pfunc(d_max_vel, optimised_consumption.dragFunc(d_max_vel, plane, atmosphere))
-#                        
-#                    except Exception as e:
-#                        print(e)
-#                        pass
                     result['max_distance_time']=int(Capacity/P_d_max)
                     result['max_distance_speed']=d_max_vel
+                    result['max_distance_drag']=drag_min
                     result['max_distance']=result['max_distance_time']*result['max_distance_speed']
                 else:
                     P_min_vel=conditions['fixed_speed']

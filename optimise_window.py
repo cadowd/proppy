@@ -289,7 +289,7 @@ Suitable: {} \n""".format(report['analysed'], report['low_thrust'], report['over
         dragP=optimised_consumption.dragFunc(Uplot, plane, atmosphere)
         self.plane_curve=[Uplot, dragP]
         axes.plot(Uplot,dragP, color='k', label='Plane')
-        plane_line = mlines.Line2D([], [], color='k', label='Plane polar')
+        plane_line = mlines.Line2D([], [], color='k', label='Plane drag')
         
         legend_handles.append(plane_line)
         axes.legend(handles=legend_handles)
@@ -337,15 +337,18 @@ Suitable: {} \n""".format(report['analysed'], report['low_thrust'], report['over
         T[~id_valid]=float('nan')
         axes.axis([0, np.nanmax(combo['Umesh']), 0, np.nanmax(T)])
 #        axes.autoscale(True)
+        axes.scatter(combo['max_distance_speed'], combo['max_distance_drag'], c='b', label='Max range conditions')
+        axes.scatter(combo['max_time_speed'], combo['max_time_drag'], c='r', label='Max flight time conditions')
         try:
-            axes.plot(self.plane_curve[0],self.plane_curve[1], color='k', label='Plane')
+            axes.plot(self.plane_curve[0],self.plane_curve[1], color='k', label='Plane drag')
         except AttributeError:
             Uplot=np.linspace(self.optimisation['Umin']+0.1, self.optimisation['Umax'], 100)
             dragP=optimised_consumption.dragFunc(Uplot, plane, atmosphere)
             self.plane_curve=[Uplot, dragP]
-            axes.plot(Uplot,dragP, color='k', label='Plane')
-            plane_line = mlines.Line2D([], [], color='k', label='Plane polar')
+            axes.plot(Uplot,dragP, color='k', label='Plane drag')
+            plane_line = mlines.Line2D([], [], color='k', label='Plane drag')
         
+        axes.legend(loc=1)
         self.canvas.draw()
         
     def plot_eff(self, axes):
@@ -390,16 +393,18 @@ Suitable: {} \n""".format(report['analysed'], report['low_thrust'], report['over
         T[~id_valid]=float('nan')
         axes.axis([0, np.nanmax(combo['Umesh']), 0, np.nanmax(T)])
 #        axes.plot(self.plane_curve[0],self.plane_curve[1], color='k', label='PLane')
+        axes.scatter(combo['max_distance_speed'], combo['max_distance_drag'], c='b', label='Max range conditions')
+        axes.scatter(combo['max_time_speed'], combo['max_time_drag'], c='r', label='Max flight time conditions')
         try:
-            axes.plot(self.plane_curve[0],self.plane_curve[1], color='k', label='Plane')
+            axes.plot(self.plane_curve[0],self.plane_curve[1], color='k', label='Plane drag')
         except AttributeError:
             Uplot=np.linspace(self.optimisation['Umin']+0.1, self.optimisation['Umax'], 100)
             dragP=optimised_consumption.dragFunc(Uplot, plane, atmosphere)
             self.plane_curve=[Uplot, dragP]
-            axes.plot(Uplot,dragP, color='k', label='Plane')
-            plane_line = mlines.Line2D([], [], color='k', label='Plane polar')
+            axes.plot(Uplot,dragP, color='k', label='Plane drag')
+            plane_line = mlines.Line2D([], [], color='k', label='Plane drag')
 
-        
+        axes.legend(loc=1)
         self.canvas.draw()
         
         
