@@ -22,7 +22,7 @@ pickle
 matplotlib (some back end functions are used for finding contour intersections which may cause issues in early versions).
 
 ## First Use:
-The main window shows the power consumption of selected combinations. To plot the power consumption (or efficiency), simply select a motor from the list (new motors can be added if you can't find the one you want), a propeller (currently the only propellers selectable are onces for which the data is available) and an aircraft, then click 'Plot'. Multiple motors, propellers and aircraft can be selected for comparison, the plot is cleared by clicking clear plot in the lower right. The aircraft is defined by its drag polar, which can be calculated from exported XFLR5 results. To use XFLR5 results, a type 2 analysis must be run (fixed lift) and the resulting polar exported to a csv file. This file can then be read by PropPy.
+The main window shows the power consumption of selected combinations. To plot the power consumption (or efficiency), simply select a motor from the list (new motors can be added if you can't find the one you want), a propeller (currently the only propellers selectable are onces for which the data is available) and an aircraft, then click 'Plot'. Multiple motors, propellers and aircraft can be selected for comparison, the plot is cleared by clicking clear plot in the lower right. The aircraft is defined by its drag polar (the drag as a quadratic function of lift), which can be calculated from exported XFLR5 results. To use XFLR5 results, a type 2 analysis must be run (fixed lift) and the resulting polar exported to a csv file. This file can then be read by PropPy. More details on defining an aircraft can be found in the aircraft section.
 
 Battery and atmosphere settings are changed in the settings drop down menu.
 
@@ -46,7 +46,7 @@ The first time a combination is calculated may take some time, but the results a
 
 This gives an overview of the regions where each combination is the most efficient, with the steady flight speed on the x axis and the thrust on the y axis. The black line is the drag polar of the selected aircraft. To analyse the plot above, we can see that the best choice propeller considered for slow speeds is the 9x4.5, especially for high thrusts, however at the speeds that this plane is likely to fly (around 15m/s) the 8x8 and 8x6 props are much better choices. The 8x6 would be better if you plan to fly at low speeds but with lots of acceleration (as it is more efficient at higher thrusts in this range), however the 8x8 is a better choice for higher speeds. A good combination will dominate in a wide range. Not all the combinations shown in this plot may meet the constraints however, the successful combinations (the top 5 by default) are shown in the bottom window as shown below:
 
-![optimisation_plot](/img/example_5.png)
+![optimisation_plot](/img/example_5.PNG)
 
 It should be noted that the reported values of the max flight time and max range assume a constant, level flight the entire time (you will never get this) and depend strongly on the battery capacity defined (set in the main window). However, as long as the battery voltage doesn't change, the best motor/prop combination is unaffected by the final battery capacity used. Now you have a shortlist of interesting options for your power system. To analyse them further, you can click the buttons to plot the combinations maximum efficiency or power consumption.
 
