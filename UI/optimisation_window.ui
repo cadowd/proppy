@@ -330,6 +330,20 @@
      </property>
     </widget>
    </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_10">
+     <property name="text">
+      <string>Number of motors</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1" colspan="2">
+    <widget class="QSpinBox" name="spinBox_no_motors">
+     <property name="value">
+      <number>1</number>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>

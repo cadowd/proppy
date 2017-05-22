@@ -471,8 +471,10 @@ def top_choices(plane, motors, propellers, atmosphere,  folder, conditions, numb
                 else:
                     P_min_vel=conditions['fixed_speed']
                     P_min=Pfunc(P_min_vel, optimised_consumption.dragFunc(P_min_vel, plane, atmosphere))
+                    P_min_vel_drag=optimised_consumption.dragFunc(P_min_vel, plane, atmosphere)
                     result['max_time']=int(Capacity/P_min)
                     result['max_time_speed']=P_min_vel
+                    result['max_time_drag']=P_min_vel_drag
                     result['max_time_distance']=result['max_time']*result['max_time_speed']
 
                     d_max_vel=conditions['fixed_speed']
@@ -480,6 +482,7 @@ def top_choices(plane, motors, propellers, atmosphere,  folder, conditions, numb
 
                     result['max_distance_time']=int(Capacity/P_d_max)
                     result['max_distance_speed']=d_max_vel
+                    result['max_distance_drag']=P_min_vel_drag
                     result['max_distance']=result['max_distance_time']*result['max_distance_speed']
 
                 

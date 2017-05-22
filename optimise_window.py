@@ -246,7 +246,7 @@ Suitable: {} \n""".format(report['analysed'], report['low_thrust'], report['over
         """
         axes.autoscale(True)
 #        colors = itertools.cycle(["r", "b", "g", "y", "c","m"])
-        idx = np.linspace(0, 1, 15)
+        idx = np.linspace(0, 1, len(best_regions))
         cmap = cm.get_cmap('Accent')
         colors = itertools.cycle(cmap(idx))
         
@@ -337,8 +337,11 @@ Suitable: {} \n""".format(report['analysed'], report['low_thrust'], report['over
         T[~id_valid]=float('nan')
         axes.axis([0, np.nanmax(combo['Umesh']), 0, np.nanmax(T)])
 #        axes.autoscale(True)
-        axes.scatter(combo['max_distance_speed'], combo['max_distance_drag'], c='b', label='Max range conditions')
-        axes.scatter(combo['max_time_speed'], combo['max_time_drag'], c='r', label='Max flight time conditions')
+        if self.radioButton_fixed_speed.isChecked():
+            axes.scatter(combo['max_time_speed'], combo['max_time_drag'], c='b', label='Cruise speed')
+        else:
+            axes.scatter(combo['max_distance_speed'], combo['max_distance_drag'], c='b', label='Max range conditions')
+            axes.scatter(combo['max_time_speed'], combo['max_time_drag'], c='r', label='Max flight time conditions')
         try:
             axes.plot(self.plane_curve[0],self.plane_curve[1], color='k', label='Plane drag')
         except AttributeError:
@@ -393,8 +396,12 @@ Suitable: {} \n""".format(report['analysed'], report['low_thrust'], report['over
         T[~id_valid]=float('nan')
         axes.axis([0, np.nanmax(combo['Umesh']), 0, np.nanmax(T)])
 #        axes.plot(self.plane_curve[0],self.plane_curve[1], color='k', label='PLane')
-        axes.scatter(combo['max_distance_speed'], combo['max_distance_drag'], c='b', label='Max range conditions')
-        axes.scatter(combo['max_time_speed'], combo['max_time_drag'], c='r', label='Max flight time conditions')
+        if self.radioButton_fixed_speed.isChecked():
+            axes.scatter(combo['max_time_speed'], combo['max_time_drag'], c='b', label='Cruise speed')
+        else:
+            axes.scatter(combo['max_distance_speed'], combo['max_distance_drag'], c='b', label='Max range conditions')
+            axes.scatter(combo['max_time_speed'], combo['max_time_drag'], c='r', label='Max flight time conditions')
+
         try:
             axes.plot(self.plane_curve[0],self.plane_curve[1], color='k', label='Plane drag')
         except AttributeError:

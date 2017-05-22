@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>523</height>
+    <height>380</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
    <item row="0" column="1" colspan="2">
     <widget class="QDoubleSpinBox" name="doubleSpinBox_vel"/>
    </item>
-   <item row="14" column="1" colspan="2">
+   <item row="11" column="1" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -34,24 +34,24 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="1" colspan="2">
+   <item row="5" column="1" colspan="2">
     <widget class="QLabel" name="label_RPM">
      <property name="text">
-      <string>Hover RPM: N/A</string>
+      <string>RPM: N/A</string>
      </property>
     </widget>
    </item>
-   <item row="12" column="1" colspan="2">
+   <item row="9" column="1" colspan="2">
     <widget class="QLabel" name="label_Imax">
      <property name="text">
       <string>Current limit: N/A</string>
      </property>
     </widget>
    </item>
-   <item row="9" column="1" colspan="2">
-    <widget class="QLabel" name="label_P_hover">
+   <item row="6" column="1" colspan="2">
+    <widget class="QLabel" name="label_P">
      <property name="text">
-      <string>Hover power: N/A</string>
+      <string>Power: N/A</string>
      </property>
     </widget>
    </item>
@@ -72,7 +72,7 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="1">
+   <item row="8" column="1">
     <widget class="QLabel" name="label_Kv">
      <property name="text">
       <string>Approximate motor Kv: N/A</string>
@@ -86,68 +86,11 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="1" colspan="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_Th_max">
+   <item row="3" column="1" colspan="2">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_propP">
      <property name="enabled">
       <bool>false</bool>
      </property>
-     <property name="decimals">
-      <number>0</number>
-     </property>
-     <property name="maximum">
-      <double>10000.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>Max thrust per motor [g]</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" rowspan="2" colspan="3">
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>Manouverability</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QRadioButton" name="radioButton_manouv_low">
-        <property name="text">
-         <string>Low</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="radioButton_manouv_med">
-        <property name="text">
-         <string>Medium</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="radioButton_manouv_high">
-        <property name="text">
-         <string>High</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="radioButton_manouv_custom">
-        <property name="text">
-         <string>Custom</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="3" column="1" colspan="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_propP">
      <property name="decimals">
       <number>1</number>
      </property>
@@ -163,17 +106,17 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="1">
-    <widget class="QLabel" name="label_I_hover">
+   <item row="7" column="1">
+    <widget class="QLabel" name="label_I">
      <property name="text">
-      <string>Hover current: N/A</string>
+      <string>Current: N/A</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="0" rowspan="7">
+   <item row="5" column="0" rowspan="7">
     <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>Lower Kv reduces motor current and power, increasing efficiency. Choose a motor with the lowest possible Kv that gives the required thrust. These values assume medium quality motors at 75% efficiency, errors can be in the order of up to 30% for high or low quality motors.</string>
+      <string>Input values for the maximum speed and craft drag to ensure performance. Lower Kv reduces motor current and power, increasing efficiency. Choose a motor with the lowest possible Kv that gives the required thrust. These values assume medium quality motors at 75% efficiency, errors can be in the order of up to 30% for high or low quality motors.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -199,11 +142,6 @@
   <tabstop>doubleSpinBox_propD</tabstop>
   <tabstop>doubleSpinBox_propP</tabstop>
   <tabstop>doubleSpinBox_V</tabstop>
-  <tabstop>radioButton_manouv_low</tabstop>
-  <tabstop>radioButton_manouv_med</tabstop>
-  <tabstop>radioButton_manouv_high</tabstop>
-  <tabstop>radioButton_manouv_custom</tabstop>
-  <tabstop>doubleSpinBox_Th_max</tabstop>
  </tabstops>
  <resources/>
  <connections>

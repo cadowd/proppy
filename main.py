@@ -1186,8 +1186,16 @@ class kv_dialog_window(QtWidgets.QDialog):
         self.calculate()
 
     def populate(self):
-        print('here')
+
         self.doubleSpinBox_V.setValue(self.battery['V'])
+        
+    def calc_error(self):
+        self.label_RPM.setText("Hover RPM: N/A")
+        self.label_P_hover.setText("Hover power: N/A")
+        self.label_I_hover.setText("Hover current: N/A")
+        self.label_Kv.setText("Approximate motor Kv: N/A")
+        self.label_Imax.setText("Max current: N/A")
+        return
         
     def calculate(self):
         #Calculate approximate figure of merit
@@ -1200,8 +1208,10 @@ class kv_dialog_window(QtWidgets.QDialog):
         eff_motor=0.75 #estimate motor efficiency
         #check pitch as well
         if Th_hover==0:
+            self.calc_error()
             return
         elif prop_dia==0:
+            self.calc_error()
             return
         
         
@@ -1221,11 +1231,7 @@ class kv_dialog_window(QtWidgets.QDialog):
         Kv_opt=estimation.opt_kv(V,n_max*2*np.pi,Q_max) #Approximate Kv required to reach max thrust
         
         if Kv_opt == "Error":
-            self.label_RPM.setText("Hover RPM: N/A")
-            self.label_P_hover.setText("Hover power: N/A")
-            self.label_I_hover.setText("Hover current: N/A")
-            self.label_Kv.setText("Approximate motor Kv: N/A")
-            self.label_Imax.setText("Max current: N/A")
+            self.calc_error()
             return
         
         P_hover=2*np.pi*n_hover*Q_hover/eff_motor
@@ -1247,121 +1253,100 @@ class fw_kv_dialog_window(QtWidgets.QDialog):
         uic.loadUi("./UI/dialog_kv_chooser_fixed_wing.ui", self)
         self.atmosphere=atmosphere
         self.battery=battery
-#        self.pushButton_calculate.clicked.connect(self.calculate)
-#        self.buttonBox.accepted.connect(lambda: edit_plane_window.okay(self))
-        self.doubleSpinBox_mass.valueChanged.connect(self.refresh_thrust)
-        self.spinBox_no_motors.valueChanged.connect(self.refresh_thrust)
-        self.doubleSpinBox_Th.valueChanged.connect(self.refresh_mass)
+
+        self.doubleSpinBox_vel.valueChanged.connect(self.calculate)
+        self.doubleSpinBox_Th.valueChanged.connect(self.calculate)
         self.doubleSpinBox_V.valueChanged.connect(self.calculate)
         self.doubleSpinBox_propD.valueChanged.connect(self.calculate)
         self.doubleSpinBox_propP.valueChanged.connect(self.calculate)
         
-        self.radioButton_manouv_low.toggled.connect(self.refresh_thrust)
-        self.radioButton_manouv_med.toggled.connect(self.refresh_thrust)
-        self.radioButton_manouv_high.toggled.connect(self.refresh_thrust)
-        self.radioButton_manouv_custom.toggled.connect(self.refresh_thrust)
+#        self.radioButton_manouv_low.toggled.connect(self.refresh_thrust)
+#        self.radioButton_manouv_med.toggled.connect(self.refresh_thrust)
+#        self.radioButton_manouv_high.toggled.connect(self.refresh_thrust)
+#        self.radioButton_manouv_custom.toggled.connect(self.refresh_thrust)
         
         self.low_factor=1.25
         self.med_factor=1.6
         self.high_factor=2.1
 
-    def refresh_thrust(self):
-        if self.doubleSpinBox_mass.value()==0:
-            QtWidgets.QMessageBox.warning(self, 'Mass is 0',
-                                            "Please input a non-zero craft mass",
-                                            QtWidgets.QMessageBox.Ok)
-            return
-        Th_g=self.doubleSpinBox_mass.value()/self.spinBox_no_motors.value()*1000
-        self.doubleSpinBox_Th.setValue(Th_g)
-        
-        if self.radioButton_manouv_low.isChecked():
-            self.doubleSpinBox_Th_max.setValue(Th_g*self.low_factor)
-            self.doubleSpinBox_Th_max.setEnabled(False)
-        elif self.radioButton_manouv_med.isChecked():
-            self.doubleSpinBox_Th_max.setValue(Th_g*self.med_factor)
-            self.doubleSpinBox_Th_max.setEnabled(False)
-        elif self.radioButton_manouv_high.isChecked():
-            self.doubleSpinBox_Th_max.setValue(Th_g*self.high_factor)
-            self.doubleSpinBox_Th_max.setEnabled(False)
-        elif self.radioButton_manouv_custom.isChecked():
-            self.doubleSpinBox_Th_max.setEnabled(True)
-            
-        self.calculate()
-            
 
-    def refresh_mass(self):
-        if self.doubleSpinBox_Th.value()==0:
-            QtWidgets.QMessageBox.warning(self, 'Thrust is 0',
-                                            "Please input a non-zero thrust",
-                                            QtWidgets.QMessageBox.Ok)
-            return
-        mass_kg=self.doubleSpinBox_Th.value()/1000*self.spinBox_no_motors.value()
-        self.doubleSpinBox_mass.setValue(mass_kg)
-        Th_g=self.doubleSpinBox_Th.value()
-        
-        if self.radioButton_manouv_low.isChecked():
-            self.doubleSpinBox_Th_max.setValue(Th_g*self.low_factor)
-        elif self.radioButton_manouv_med.isChecked():
-            self.doubleSpinBox_Th_max.setValue(Th_g*self.med_factor)
-        elif self.radioButton_manouv_high.isChecked():
-            self.doubleSpinBox_Th_max.setValue(Th_g*self.high_factor)
-            
-        self.calculate()
 
     def populate(self):
-        print('here')
+        self.doubleSpinBox_V.setValue(self.battery['V'])
+
+    def calc_error(self):
         self.doubleSpinBox_V.setValue(self.battery['V'])
         
     def calculate(self):
-        #Calculate approximate figure of merit
+        #USE J=approx 0.5
         prop_dia=self.doubleSpinBox_propD.value()*0.0254
-        prop_pitch=self.doubleSpinBox_propP.value()*0.0254
-        prop_ratio=prop_dia/prop_pitch
-        Th_hover=self.doubleSpinBox_Th.value()*9.8/1000
-        Th_max=self.doubleSpinBox_Th_max.value()*9.8/1000
+        vel=self.doubleSpinBox_vel.value()
+#        prop_pitch=self.doubleSpinBox_propP.value()*0.0254
+#        prop_ratio=prop_dia/prop_pitch
+        Th=self.doubleSpinBox_Th.value()
+
         V=self.doubleSpinBox_V.value()
-        eff_motor=0.75 #estimate motor efficiency
-        #check pitch as well
-        if Th_hover==0:
-            return
-        elif prop_dia==0:
-            return
-        
-        
-        
         
         atmosphere=self.atmosphere
         rho=atmosphere['rho']
-        CT=estimation.CT_model(prop_ratio)
-        CQ=estimation.CQ_model(prop_ratio)
-        n_hover=np.sqrt(Th_hover/(CT*rho*prop_dia**4))
-        n_max=np.sqrt(Th_max/(CT*rho*prop_dia**4))
         
-        Q_hover=CQ*rho*n_hover**2*prop_dia**5
-        Q_max=CQ*rho*n_max**2*prop_dia**5
+        eff_motor=0.75 #estimate motor efficiency
+        eff_prop=0.7 #estimated propeller efficiency
+        CT0=0.14 #estimate of thrust coefficient
+        J_max=0.6
+        pitch_factor = 1.15 #Rough estimate from MH aerotools
+        
+        #Here we assume CT reduces linearly with J, reaching 0 at the zero thrust advance ratio J1
+        #As a first order approximation, J_optimal=K*J1
+        #For APC data, K= 0.66 something something, CT when at the optimal advance ratio is relatively constant
+        #This assumption breaks down at large diameter props at low velocities.
+        CT=CT0*0.33795
+        #check pitch as well
+        if Th==0:
+            return
+        elif prop_dia==0:
+            return
+        elif vel==0:
+            return
+        
+#        n=vel/(J_max*prop_dia)
+        n=np.sqrt(Th/(CT*rho*prop_dia**4))
+
+        Pi_ideal=vel/n
+        #J_optimal is a linear function of Pitch/diameter (r^2 around 0.91 for APC data)
+        #Solving this using n found abouve and flight velocity gives the results below
+        #Coefficients from APC data
+        Pi_real=(vel/n-0.168119*prop_dia)/0.5922177*39.3701
+        
+        self.doubleSpinBox_propP.setValue(Pi_real)
+        print(n)
+        P_cruise=Th*vel
+        P_cruise_mech=P_cruise/eff_prop
+        P_cruise_elec=P_cruise_mech/eff_motor
         
 
-        Kv_opt=estimation.opt_kv(V,n_max*2*np.pi,Q_max) #Approximate Kv required to reach max thrust
+        Q_cruise=P_cruise_mech/(n*2*np.pi)
+        
+        print(Q_cruise)
+        Kv_opt=estimation.opt_kv(V,n*2*np.pi,Q_cruise) #Approximate Kv required to reach max thrust
         
         if Kv_opt == "Error":
-            self.label_RPM.setText("Hover RPM: N/A")
-            self.label_P_hover.setText("Hover power: N/A")
-            self.label_I_hover.setText("Hover current: N/A")
+            self.label_RPM.setText("RPM: N/A")
+            self.label_P.setText("Power: N/A")
+            self.label_I.setText("Current: N/A")
             self.label_Kv.setText("Approximate motor Kv: N/A")
             self.label_Imax.setText("Max current: N/A")
             return
         
-        P_hover=2*np.pi*n_hover*Q_hover/eff_motor
         
-        I_max=Q_max*Kv_opt*np.pi/30
+        I=P_cruise_elec/V
         
-        I_hover=P_hover/V
-        
-        self.label_RPM.setText("Hover RPM: {:0.2f}".format(n_hover*60))
-        self.label_P_hover.setText("Hover power: {:0.2f} W".format(P_hover))
-        self.label_I_hover.setText("Hover current: {:0.2f} A".format(I_hover))
+        self.label_RPM.setText("RPM: {:0.2f}".format(n*60))
+        self.label_P.setText("Power: {:0.2f} W".format(P_cruise_elec))
+        self.label_I.setText("Current: {:0.2f} A".format(I))
         self.label_Kv.setText("Approximate motor Kv: {:0.2f}".format(Kv_opt))
-        self.label_Imax.setText("Max current: {:0.2f} A".format(I_max))
+#        self.label_Imax.setText("Max current: {:0.2f} A".format(I_max))
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = main_window()
