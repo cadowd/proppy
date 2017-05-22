@@ -238,9 +238,19 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_prop_dets">
+        <widget class="QPushButton" name="pushButton_Kv_selection">
+         <property name="toolTip">
+          <string>Estimate a suitable Kv for a system to simplify motor selection.</string>
+         </property>
          <property name="text">
-          <string>Propeller details and Kv chooser</string>
+          <string>Hover craft Kv estimation</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_fw_Kv_selection">
+         <property name="text">
+          <string>Fixed wing Kv estimation</string>
          </property>
         </widget>
        </item>
