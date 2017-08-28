@@ -150,7 +150,7 @@ class quad_optimise_window(QtWidgets.QDialog):
         Function to plot all selected combinations. Please don't be silly and
         try to plot everything, there's better ways to waste your time.
         """
-        
+
         
 #        no_to_plot=0
         xkey=self.comboBox_xaxis.currentText()
@@ -195,6 +195,7 @@ class quad_optimise_window(QtWidgets.QDialog):
         """
         Function to analyse and compare ALL the selected combinations.
         """
+        
         axes.clear()
         motors_dat=main.return_checked_values(self.listView_motors)
         propellers_dat=main.return_checked_values(self.listView_props)
@@ -239,10 +240,13 @@ class quad_optimise_window(QtWidgets.QDialog):
 
         Capacity=self.battery['capacity']*3.6*self.battery['V']
         
+        
+        
         # Setting the value on every run to 0
         self.prog_widget.setValue(0)
         result_list=[]
         for calc_dict in calc_list:
+            
             QtWidgets.QApplication.instance().processEvents()
             if self.prog_widget.wasCanceled():
                 QtWidgets.QMessageBox.information(self, 'Optimisation cancelled',
@@ -267,6 +271,7 @@ class quad_optimise_window(QtWidgets.QDialog):
             result['max_time']=int(Capacity/result['Pel_nom'])
             result['max_acc']=max_acc
             result_list.append(result)
+            
         
         if len(result_list)<1:
             QtWidgets.QMessageBox.warning(self, 'No suitable combinations found',
