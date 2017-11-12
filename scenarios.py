@@ -32,8 +32,6 @@ from scipy.optimize import fsolve
 from scipy.interpolate import interp1d
 import BLDC_model
 
-import data_extraction
-
 def static_max_current(C,atmosphere,battery,motor,propeller):
     """
     Finds maximum expected current for motor and propeller combination if held

@@ -193,7 +193,7 @@ def gen_single_Psurf(combo_dict,Urange, Trange, folder, battery, atmosphere):
     
 
     #Get the maximum thrust and current in static conditions
-    Imax, rpm_static, Tmax=scenarios.static_max_current(1.0,atmosphere,battery,motor,propeller)
+    Imax, rpm_static, Tmax, Qmax =scenarios.static_max_current(1.0,atmosphere,battery,motor,propeller)
 #            Psurf_col=np.dstack((Psurf_col,Psurf)) #Collect power surface
 #            motor_list.append(motor)
 #            prop_list.append(propeller)
